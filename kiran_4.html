@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRM AP Navigation</title>
+  <style>
+    /* Importing Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap');
+
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eef5ff; /* Light blue background */
+    }
+
+    /* Container */
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e1e4eb;
+    }
+
+    /* Heading */
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      color: #0056b3; /* Deep blue */
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #333; /* Darker text */
+      margin-bottom: 30px;
+    }
+
+    /* Dropdown Menus */
+    select {
+      width: 85%;
+      padding: 12px;
+      margin: 15px 0;
+      border: 2px solid #cce1ff;
+      border-radius: 6px;
+      background-color: #f7faff; /* Light blue shade */
+      font-size: 16px;
+      color: #333;
+      font-family: 'Roboto', sans-serif;
+      transition: all 0.3s;
+    }
+
+    select:hover {
+      border-color: #0056b3;
+      background-color: #eef5ff;
+    }
+
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 5px #0056b3;
+      border-color: #0056b3;
+    }
+
+    /* Button Styles */
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      background-color: #003d80;
+      transform: translateY(0);
+    }
+
+    /* Styling for Dropdown Groups */
+    optgroup {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: #555;
+    }
+
+    option {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SRM AP Navigation</h1>
+    <p>Select your destination within SRM AP and your preferred mode of transport.</p>
+    <select id="destination">
+      <option value="" disabled selected>Select your destination</option>
+      <optgroup label="Academic Blocks">
+        <option value="SR Block, SRM AP">SR Block</option>
+        <option value="CV Raman Block, SRM AP">CV Raman Block</option>
+        <option value="V Block, SRM AP">V Block</option>
+        <option value="JC Bose Block, SRM AP">JC Bose Block</option>
+        <option value="X-Lab & ITKM (Level-2, Room-X201), SRM AP">
+          X-Lab & ITKM (Level-2, Room-X201)
+        </option>
+        <option value="Library, SRM AP">Library</option>
+      </optgroup>
+      <optgroup label="Hostels">
+        <option value="Vedavathi Hostel, SRM AP">Vedavathi Hostel</option>
+        <option value="Ganga Hostel, SRM AP">Ganga Hostel</option>
+        <option value="Yamuna Hostel, SRM AP">Yamuna Hostel</option>
+        <option value="Narmada Hostel, SRM AP">Narmada Hostel</option>
+        <option value="Kaveri Hostel, SRM AP">Kaveri Hostel</option>
+        <option value="Krishna Hostel, SRM AP">Krishna Hostel</option>
+        <option value="Godavari Hostel, SRM AP">Godavari Hostel</option>
+      </optgroup>
+      <optgroup label="Facilities">
+        <option value="Food Court, SRM AP">Food Court</option>
+        <option value="Stationary Shop, SRM AP">Stationary Shop</option>
+        <option value="Events Ground, SRM AP">Events Ground</option>
+      </optgroup>
+      <optgroup label="Sports Grounds">
+        <option value="Badminton Court, SRM AP">Badminton Court</option>
+        <option value="Tennis Ground, SRM AP">Tennis Ground</option>
+        <option value="Cricket Ground, SRM AP">Cricket Ground</option>
+        <option value="Volleyball Court, SRM AP">Volleyball Court</option>
+        <option value="Basketball Court, SRM AP">Basketball Court</option>
+        <option value="Football Ground, SRM AP">Football Ground</option>
+      </optgroup>
+    </select>
+    <select id="transport-mode">
+      <option value="driving">Driving</option>
+      <option value="walking">Walking</option>
+      <option value="bicycling">Bicycling</option>
+      <option value="transit">Public Transport</option>
+    </select>
+    <button id="navigate-btn">Navigate</button>
+  </div>
+
+  <script>
+    document.getElementById("navigate-btn").addEventListener("click", () => {
+      // Get the selected destination and mode of transport
+      const destination = document.getElementById("destination").value;
+      const mode = document.getElementById("transport-mode").value;
+
+      if (!destination) {
+        alert("Please select a destination.");
+        return;
+      }
+
+      // Google Maps Navigation URL
+      const googleMapsBaseURL = "https://www.google.com/maps/dir/?api=1";
+      const params = new URLSearchParams({
+        destination: destination,
+        travelmode: mode,
+      });
+
+      // Redirect to Google Maps with navigation details
+      const navigationURL = `${googleMapsBaseURL}&${params.toString()}`;
+      window.open(navigationURL, "_blank");
+    });
+  </script>
+</body>
+</html>
