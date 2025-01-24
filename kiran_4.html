@@ -168,7 +168,7 @@
       });
 
       // Redirect to Google Maps with navigation details
-      const navigationURL = ${googleMapsBaseURL}&${params.toString()};
+      const navigationURL = `${googleMapsBaseURL}&${params.toString()}`;
       window.open(navigationURL, "_blank");
     });
   </script>
